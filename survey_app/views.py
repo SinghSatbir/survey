@@ -1,12 +1,13 @@
+from django.http import HttpResponse
 from django.shortcuts import render
-
+from PIL import Image
 # Create your views here.
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import Survey, Questions, Answer
 from .serializers import SurveySerializer,QuestionSerializer,AnswerSerializer
 from rest_framework import permissions
 from rest_framework import viewsets
-
+import urllib
 
 class SurveyList(ListCreateAPIView):
 
@@ -64,3 +65,13 @@ class AnswerDetailView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Answer.objects.filter()
+
+# @csrf_exempt
+def generate_thumbnail(request):
+    data=request.data
+    urllib.request.urlretrieve(data['image_url'],"test.jpg")
+    image_file=Image.open("test.jpg")
+    reduced_image=image_file.resize((50,50), Image.ANTIALIAS)
+    reduced_image.save("reduced_image.jpg")
+    with open("reduced_image.jpg",'rb') as f:
+        return HttpResponse(f.read(),content_type="image/jpeg")
