@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import Survey,Questions
+from .models import Survey,Questions,Answer
 
 class SurveySerializer(ModelSerializer):
 
@@ -20,5 +20,5 @@ class AnswerSerializer(ModelSerializer):
 
 
     class Meta:
-        model=Questions
+        model=Answer
         fields=['id','question_id','user_id','answer']
