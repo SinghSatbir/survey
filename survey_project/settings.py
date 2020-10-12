@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication',
     'drf_yasg',
+    'survey_app',
 ]
 
 REST_FRAMEWORK={
@@ -53,7 +54,8 @@ SWAGGER_SETTINGS={
             "type":"apiKey",
             "name":"Authorization",
             "in":"header",
-        }
+        },
+    "base_path": 'localhost:8000/'
     }
 }
 MIDDLEWARE = [
